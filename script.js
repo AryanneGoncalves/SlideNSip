@@ -1,5 +1,6 @@
 const imgSlider = document.querySelector('.img-slider');
 const imgFruits = document.querySelectorAll('.img-item.fruit');
+const infobox = document.querySelector('.info-box');
 const infoSlider = document.querySelector('.info-slider');
 
 const nextBtn = document.querySelector('.next-btn');
@@ -20,12 +21,16 @@ nextBtn.addEventListener('click', () => {
     }
 
     document.querySelector('.fruit.active').classList.remove('active');
-    imgFruits[index].classList.add('active'); 
+    imgFruits[index].classList.add('active');
+
+    if (direction == 1) {
+        infoSlider.appendChild(infoSlider.firstElementChild);
+    } 
 
     direction = -1;
-    console.log(direction);
 
-    infoSlider.style.transform = 'translateY(-25%)';
+    infoBox.style.justifyContent = 'flex-start';
+    infoSlider.style.transform = 'translateY(-25%)';    
 
 });
 
@@ -38,28 +43,23 @@ prevBtn.addEventListener('click', () => {
     if (index < 0) {
         index = imgFruits.length - 1;
     }
-    
+
     document.querySelector('.fruit.active').classList.remove('active');
     imgFruits[index].classList.add('active');
 
-    if (direction == 1){
-        infoSlider.appendChild(infoSlider.lastElementChild);
-    }
-
     direction = 1;
-
 
     infoSlider.style.transform = 'translateY(25%)';
 
 });
 
-infoSlider.addEventListener('transitionned', () => {
+infoSlider.addEventListener('transitionend', () => {
 
-    if (direction == -1){
+    if (direction == -1) {
         infoSlider.appendChild(infoSlider.firstElementChild);
-    }
-    else if (direction ==1) {
-        infoSlider.prepend(infoSlider.lastElementChild);   
+    } 
+    else if (direction == 1) {
+        infoSlider.prepend(infoSlider.lastElementChild);
     }
 
     infoSlider.style.transition = 'none';
@@ -67,9 +67,10 @@ infoSlider.addEventListener('transitionned', () => {
 
     setTimeout(() => {
         infoSlider.style.transition = '.5s cubic-bezier(0.645, 0.045, 0.355, 1)';
+    }, 50);
 
-    });
 });
+
 
 
 
