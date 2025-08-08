@@ -1,7 +1,8 @@
 const imgSlider = document.querySelector('.img-slider');
 const imgFruits = document.querySelectorAll('.img-item.fruit');
-const infobox = document.querySelector('.info-box');
+const infoBox = document.querySelector('.info-box'); 
 const infoSlider = document.querySelector('.info-slider');
+const bgs = document.querySelectorAll('.bg');
 
 const nextBtn = document.querySelector('.next-btn');
 const prevBtn = document.querySelector('.prev-btn');
@@ -23,8 +24,11 @@ nextBtn.addEventListener('click', () => {
     document.querySelector('.fruit.active').classList.remove('active');
     imgFruits[index].classList.add('active');
 
+    document.querySelector('.bg.active').classList.remove('active');
+    bgs[index].classList.add('active');
+
     if (direction == 1) {
-        infoSlider.appendChild(infoSlider.firstElementChild);
+        infoSlider.prepend(infoSlider.lastElementChild);
     } 
 
     direction = -1;
@@ -47,8 +51,16 @@ prevBtn.addEventListener('click', () => {
     document.querySelector('.fruit.active').classList.remove('active');
     imgFruits[index].classList.add('active');
 
+    document.querySelector('.bg.active').classList.remove('active');
+    bgs[index].classList.add('active');
+
+    if (direction == -1) {
+        infoSlider.appendChild(infoSlider.firstElementChild);
+    } 
+
     direction = 1;
 
+    infoBox.style.justifyContent = 'flex-end';
     infoSlider.style.transform = 'translateY(25%)';
 
 });
@@ -62,15 +74,11 @@ infoSlider.addEventListener('transitionend', () => {
         infoSlider.prepend(infoSlider.lastElementChild);
     }
 
-    infoSlider.style.transition = 'none';
+    infoSlider.style.transition = 'none'; 
     infoSlider.style.transform = 'translateY(0)';
 
     setTimeout(() => {
         infoSlider.style.transition = '.5s cubic-bezier(0.645, 0.045, 0.355, 1)';
-    }, 50);
+    }, 40);
 
 });
-
-
-
-
